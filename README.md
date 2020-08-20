@@ -6,6 +6,6 @@ Sorry still testing, no detailed Readme yet!
 
 3.) Run: "composer install" in your flundr Directory to load all the Vendor Files
 
-4.) rename example.env to .env
+4.) rename example.env to .env and edit the Environment Config
 
 5.) Open your Browser and Visit your Domain
