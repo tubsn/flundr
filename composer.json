@@ -1,0 +1,10 @@
+{
+    "require": {
+        "flundr/core": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+			"app\\": "app/"
+		}
+    }
+}
