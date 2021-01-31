@@ -6,7 +6,7 @@ use flundr\mvc\Controller;
 class Example extends Controller {
 
 	public function __construct() {
-		$this->view('ExampleLayout');
+		$this->view('DefaultLayout');
 		$this->models('ExampleModel');
 	}
 

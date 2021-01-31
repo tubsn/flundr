@@ -3,15 +3,15 @@
 namespace app\views;
 use \flundr\mvc\views\htmlView;
 
-class ExampleLayout extends htmlView {
+class DefaultLayout extends htmlView {
 
 	// Page Header Information is available in the Templates
 	// as a $page Array. It can be accessed via $page['title']
 
-	public $title = APP_NAME;
-	public $description = APP_DESCRIPTION;
+	public $title = 'My flundr App';
+	public $description = 'App Description';
 	public $css = ['/styles/css/defaults.css', '/styles/css/main.css'];
-	public $fonts = 'https://fonts.googleapis.com/css?family=Fira+Sans:400,400i,600|Fira+Sans+Condensed:400';
+	public $fonts = 'https://fonts.googleapis.com/css?family=Fira+Sans:400,400i,600|Fira+Sans+Condensed:400,600';
 	public $js = '/styles/js/main.js';
 	public $framework = 'https://cdn.jsdelivr.net/npm/vue/dist/vue.js';
 	public $meta = [
