@@ -8,6 +8,6 @@ Sorry still testing, no detailed Readme yet!
 
 4.) rename example.env to .env and edit the Environment Config
 
-6.) run php install.php to Setup UserDB and a default User
+5.) run php install.php to Setup UserDB and a default User
 
-7.) Open your Browser and Visit your Domain
+6.) Open your Browser and Visit your Domain
