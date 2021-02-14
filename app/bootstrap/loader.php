@@ -19,15 +19,14 @@ define('PAGEURL', (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[H
 define('CONTROLLER_NAMESPACE', '\app\controller\\');
 define('MODEL_NAMESPACE', '\app\models\\');
 define('VIEW_NAMESPACE', '\app\views\\');
-define('LOGINCOOKIE_NAME', 'auth');
-define('LOGINCOOKIE_EXPIRE', '+1 Year');
 
 // Load Environment Config
-require_once ENV_PATH;
+include_once ENV_PATH;
+if (!defined('ENV_PRODUCTION')) {define('ENV_PRODUCTION', false);}
 if (ENV_PRODUCTION) {error_reporting(0);}
 
 // Load App Config
-require_once CONFIGPATH . 'config.php';
+include_once CONFIGPATH . 'config.php';
 
 // Run Flundr App
 new flundr\core\Application;
