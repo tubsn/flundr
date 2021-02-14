@@ -41,7 +41,7 @@
 		<?php foreach ($logins as $login): ?>
 			<tr>
 				<td><?=formatDate($login['date'],"d.m.Y")?></td>
-				<td><?=formatDate($login['date'],"h:i")?> Uhr</td>
+				<td><?=formatDate($login['date'],"H:i")?> Uhr</td>
 				<td><?=$login['ip']?></td>
 				<td><?=$login['userinfo']?></td>
 			</tr>
