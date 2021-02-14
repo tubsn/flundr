@@ -67,7 +67,7 @@ Sie können die Passwort zurücksetzen Funktion jederzeit <a href="<?=PAGEURL?>/
 Vielen Dank<br />
 Ihr <?=MAIL_SENDER_NAME?>-Team
 <br /><br />
-<a href="<?=PAGEURL?>">Zum <?=MAIL_SENDER_NAME?></a>
+<a href="<?=PAGEURL?>"><?=MAIL_SENDER_NAME?></a>
 </p>
 
 </body>
