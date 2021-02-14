@@ -19,7 +19,7 @@ class Usermanagement extends Controller {
 
 		if (!Auth::logged_in()) { Auth::loginpage(); }
 
-		if (!Auth::get('level') == 'Admin') {
+		if (Auth::get('level') != 'Admin') {
 			throw new \Exception("Sie haben keine Berechtigung diese Seite aufzurufen", 403);
 		}
 
