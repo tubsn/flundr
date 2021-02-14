@@ -159,20 +159,20 @@ class Authentication extends Controller {
 			case 408:
 				$this->view->title = 'Token Abgelaufen';
 				$viewData['message'] = 'Ihr Passwort Reset hat zulange gedauert. Sie können den Prozess gern erneut starten.';
-				$this->view->render('auth/reset_pw_request', $viewData);
+				$this->view->render('auth/reset-pw-request', $viewData);
 			break;
 
 			// 400 - Password malformed
 			case 400:
 				$this->view->title = 'Passwort Fehler';
 				$viewData['message'] = 'Ihr Passwort muss mindestens 5 Zeichen haben.';
-				$this->view->render('auth/reset_pw_change', $viewData);
+				$this->view->render('auth/reset-pw-change', $viewData);
 			break;
 
 			default:
 				$this->view->title = 'Passwort Zurücksetzen';
 				$viewData['message'] = 'Es ist ein fehler aufgetreten bitte starten Sie den Prozess erneut. (' . $originalErrorMessage .')';
-				$this->view->render('auth/reset_pw_request', $viewData);
+				$this->view->render('auth/reset-pw-request', $viewData);
 			break;
 		}
 
