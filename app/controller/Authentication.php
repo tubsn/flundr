@@ -71,11 +71,19 @@ class Authentication extends Controller {
 		if (!Auth::logged_in()) {$this->view->redirect('/login');}
 
 		if ($_POST) {
+
 			if (!hash_equals($_POST['CSRFToken'], Session::get('CSRFToken'))) {
 				throw new \Exception("Token Missmatch", 403); die;
 			}
 
-			if (empty($_POST['password'])) {unset($_POST['password']);} // User didn´t Change the password
+			if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+				throw new \Exception("Bitte Gültige E-Mail eintragen", 400); die;
+			}
+
+			if (!empty($_POST['password']) && strlen($_POST['password']) < 5) {
+				throw new \Exception("Bitte Passwort mit mindestens 5 Zeichen eingeben", 400); die;
+			}
+
 			$this->loginHandler->update_profile($_POST);
 			$this->view->redirect('/profile');
 

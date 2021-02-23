@@ -10,18 +10,19 @@ class Usermanagement extends Controller {
 
 	public function __construct() {
 
-		$this->view('DefaultLayout');
-		$this->view->title = 'Benutzerverwaltung';
-
-		// this is a default Usermodel
-		// feel free to use your own
-		$this->User = new User;
-
 		if (!Auth::logged_in()) { Auth::loginpage(); }
-
 		if (Auth::get('level') != 'Admin') {
 			throw new \Exception("Sie haben keine Berechtigung diese Seite aufzurufen", 403);
 		}
+
+		$this->view('DefaultLayout');
+		$this->view->title = 'Benutzerverwaltung';
+
+		// this is the default Usermodel feel free to use your own
+		$this->User = new User;
+
+		// You can change all Fields like Userlevel, Rights or Passwords
+		$this->User->set_protected_fields(null);
 
 	}
 
@@ -44,7 +45,7 @@ class Usermanagement extends Controller {
 		}
 
 		if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-			throw new \Exception("Bitte Gültige E-Mail eintragen", 400); die;
+			throw new \Exception("Bitte gültige E-Mail eintragen", 400); die;
 		}
 
 		if (strlen($_POST['password']) < 5) {
