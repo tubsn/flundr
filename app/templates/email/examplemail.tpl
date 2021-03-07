@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <?php include tpl('email/css-styling')?>
 <body>
