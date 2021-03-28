@@ -135,8 +135,8 @@ animation: spinnerAnimation 1.2s infinite ease-in-out;}
 button > .loadIndicator {position:relative;bottom:-1px; right:-2px}
 
 /* Layouts */
-.col-2 {display:grid; grid-template-columns: 1fr 1fr; grid-gap:2vw;}}
-.col-3 {display:grid; grid-template-columns: 1fr 1fr 1fr; grid-gap:2vw;}}
+.col-2 {display:grid; grid-template-columns: 1fr 1fr; grid-gap:2vw;}
+.col-3 {display:grid; grid-template-columns: 1fr 1fr 1fr; grid-gap:2vw;}
 
 /* Forms */
 form {margin-bottom:1em;}
