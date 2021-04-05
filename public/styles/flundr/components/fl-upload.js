@@ -192,7 +192,6 @@ Fehler: ${fileInfo.error} - Dateityp: .${fileInfo.ext} - Dateigröße: ${fileInf
 
 }
 
-
-customElements.define('fl-upload', fl_fileUploader);
-
-
+document.addEventListener('DOMContentLoaded', function() {
+	customElements.define('fl-upload', fl_fileUploader);
+});
