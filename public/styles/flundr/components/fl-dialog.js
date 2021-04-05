@@ -86,5 +86,6 @@ class dialogBox extends HTMLElement {
 
 };
 
-customElements.define('fl-dialog', dialogBox);
-
+document.addEventListener('DOMContentLoaded', function() {
+	customElements.define('fl-dialog', dialogBox);
+});
