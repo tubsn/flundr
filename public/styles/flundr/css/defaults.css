@@ -75,7 +75,7 @@ h1 ~ blockquote, h3 ~ blockquote, h3 ~ blckquote {margin-top:0;}
 
 /* Hr Lines */
 hr {margin: 1em auto 1em auto; display: block; box-sizing:border-box;
-border-style: dashed; border-width: 1px; 
+border-style: dashed; border-width: 1px; border-bottom:none;
 opacity:0.3; width:100%;}
 
 p ~ hr {margin-top:0;}
