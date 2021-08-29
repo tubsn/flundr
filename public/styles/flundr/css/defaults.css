@@ -110,7 +110,7 @@ details.fancy summary:hover {background-color:#ddd}
 .text-left {text-align:left}
 .text-center {text-align:center}
 .text-right {text-align:right}
-.flright {float:right;}
+.flright, .fright {float:right;}
 .flleft, .fleft {float:left;}
 
 /* Animations */
