@@ -105,10 +105,13 @@ details.fancy summary:hover {background-color:#ddd}
 /* Helpers */
 .hidden {display:none;}
 .block {display:block;}
+.flex {display:flex;}
 .super-hide {display:none !important;}
 .text-left {text-align:left}
 .text-center {text-align:center}
 .text-right {text-align:right}
+.flright {float:right;}
+.flleft, .fleft {float:left;}
 
 /* Animations */
 @keyframes fade-in {from {opacity:0} to {opacity:1}}
