@@ -149,7 +149,7 @@ form > hr {opacity:0.3;}
 input, select, textarea {
 font-family: var(--font-body);
 font-size: 1em; line-height:140%;
-color: #222; border:1px solid #ddd;
+color: #222; border:1px solid #ddd; background-color:white;
 box-sizing:border-box; display:block;
 padding: 0.3em; width:100%;
 margin-bottom:0.25em;}
