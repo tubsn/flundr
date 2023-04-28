@@ -8,6 +8,8 @@ use flundr\controlpanel\models\User;
 
 class Usermanagement extends Controller {
 
+	private $User;
+	
 	public function __construct() {
 
 		if (!Auth::logged_in()) { Auth::loginpage(); }
