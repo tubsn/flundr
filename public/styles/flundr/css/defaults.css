@@ -177,6 +177,8 @@ label + button, fieldset + button {margin-top:0.5em;}
 form button:hover, form button:focus, .button:hover, .button:focus {background-color:black}
 form button[type='submit']:hover, form button[type='submit']:focus {background-color:#2A5DB0}
 
+fl-dialog {display:none;} /* Hide Initially, gets visible when loaded */
+
 /* Tables */
 table {border-spacing:0; border-collapse: collapse; margin-bottom:1em;}
 table:last-child {margin-bottom:0;}
