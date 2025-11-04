@@ -15,6 +15,7 @@ class dialogBox extends HTMLElement {
 
 	connectedCallback() {
 
+		this.style.display = 'inline';
 		const shadowRoot = this.attachShadow({ mode: 'open' });
 
 		if (this.selector) {
