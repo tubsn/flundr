@@ -21,6 +21,11 @@
 	<script type="text/javascript" src="<?=$framework?>"></script>
 <?php endforeach ?>
 <?php endif ?>
+<?php if (!empty($page['modules'])):?>
+<?php foreach ($page['modules'] as $module): ?>
+	<script type="module" src="<?=$module?>"></script>
+<?php endforeach ?>
+<?php endif ?>
 </head>
 <body>
 
