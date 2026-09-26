@@ -53,11 +53,13 @@ Copy `example.env` to `.env` and enter the required settings, including your dat
 
 ### 4. Set up the user database
 
-Run the installer to set up the user database and a default user:
+First add your Database Credentials to the .env file and then run the installer to set up the user database and a default user:
 
 ```bash
 php install.php
 ```
+
+Or import an existing Database.
 
 ### 5. Open the application
 
