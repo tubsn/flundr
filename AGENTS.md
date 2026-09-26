@@ -157,14 +157,12 @@ Regular HTML views also provide `$this->view->json($data)`, which sets the JSON 
 
 CSS and JavaScript files can be included directly without a build step. This keeps them easy to read, edit, and work with using AI tools. No bundler is prescribed, but one can be added when needed. Check existing assets before creating new files: `main.css` and `main.js` are sufficient for simple applications. More complex applications may benefit from separate CSS files for individual views or layouts.
 
-**CSS structure:** Organize stylesheets by page area and component. Mark larger sections with short comments that act as a table of contents. Group related selectors into small sections separated by blank lines. After a closing `}`, start the next rule no earlier than the next line; never join rules as `}.next-selector`. Multiple declarations per line are welcome if the result remains balanced and easy to scan. Put spaces after colons and semicolons. Wrap longer rules by groups of related properties; aim for lines of roughly 60 to 90 characters. Indent media queries as well. Standard CSS formatting is also fine—readability is what matters:
+**CSS structure:** Organize stylesheets by page area and component. Mark larger sections with short comments that act as a table of contents. Group related selectors into small sections separated by blank lines. After a closing `}`, start the next rule no earlier than the next line; never join rules as `}.next-selector`. Multiple declarations per line are welcome if the result remains balanced and easy to scan. Put spaces after colons and semicolons. Wrap longer rules by groups of related properties; aim for lines of roughly 80 to 110 characters. Indent media queries as well. Standard CSS formatting is also fine—readability is what matters:
 
 ```css
 /* Hero */
-.hero {min-height: 490px; margin: 28px 3% 0; padding: 65px 7%;
-display: grid; grid-template-columns: 1fr 1fr;
-position: relative; overflow: hidden; border-radius: 30px;
-background: var(--accent); color: #fff;}
+.hero {min-height: 490px; margin: 28px 3% 0; padding: 65px 7%; display: grid; grid-template-columns: 1fr 1fr;
+position: relative; overflow: hidden; border-radius: 30px; background: var(--accent); color: #fff;}
 .hero-copy {position: relative; z-index: 2; max-width: 570px;}
 .hero h1 {margin: 25px 0 20px; font-size: clamp(3rem, 5vw, 5rem); line-height: 1.05;}
 .hero p {max-width: 435px; line-height: 1.6;}
