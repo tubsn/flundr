@@ -1,6 +1,6 @@
 # Application Development with the Flundr MVC Framework
 
-This file describes general development practices for projects built with the Flundr framework. It is intended to help both people and AI build small, readable MVC applications. The [Flundr Bootstrap repository](https://github.com/tubsn/flundr) shows the basic project structure. For deeper details, consult the framework code in the [Flundr Core repository](https://github.com/tubsn/flundrCore) or in `vendor/flundr/core`. For common tasks, the guidance in this file should be sufficient without having to inspect the framework repository.
+This file describes general development practices for projects built with the Flundr framework. It is intended to help both people and AI build small, readable MVC applications. The [Flundr Bootstrap repository](https://github.com/tubsn/flundr) shows the basic project structure. For deeper details, consult the flundr framework code in the [Flundr repository](https://github.com/tubsn/flundrCore) or in `vendor/flundr/core`. For common tasks, the guidance in this file should be sufficient without having to inspect the framework repository.
 
 > **Guiding principle:** Human readability takes priority over token savings and performance optimizations. Write simple, well-structured code. Keep controllers small and move application logic and recurring operations into appropriate models. Check existing controllers, models, layouts, and CSS/JS files before creating new ones. Add extra layers only when they make the code easier to understand or maintain. The goal is to build small, maintainable applications with as little unnecessary complexity as possible. Security checks must remain in place.
 
@@ -202,6 +202,8 @@ The Flundr Bootstrap project includes login and user-management examples through
 - For uploads, check file type and size, choose safe filenames, and decide where files are stored and whether they are served publicly.
 - In production, use HTTPS and appropriate cookie settings. Keep internal details out of exception messages shown publicly; a custom `Error` controller can control user-facing messages. Do not expose stack traces or secrets to users.
 
+Further information about the auth process can be looked up in the auth classes in `/flundr/core/auth`.
+
 ## Caching
 
 `Cache::get($key)` reads an entry, while `Cache::set($key, $value, $ttl)` stores it with a lifetime in seconds. A cache miss returns `null`. A cache key can be a string such as `'articles-overview'` or an array of parameters such as `['articles', $category]`. It must include every factor that changes the result:
@@ -217,11 +219,11 @@ if ($articles === null) {
 
 To refresh data, write a new value using the same key. The `RequestCache` class also provides `delete()` and `flush()`. Keep cache access close to the model that supplies the data, and cache sensitive data only after making a deliberate decision to do so.
 
-## Helper Functions and Core Tools
+## Helper Functions and flundr Tools
 
-The core file `utility/HelperFunctions.php` provides functions including `tpl()`, `session()`, `auth()`, `dump()`, and `dd()`. `dump($data)` outputs data and continues execution; `dd($data)` outputs data and ends the request. These are development tools and do not belong in production responses.
+The flundr file `utility/HelperFunctions.php` provides functions including `tpl()`, `session()`, `auth()`, `dump()`, and `dd()`. `dump($data)` outputs data and continues execution; `dd($data)` outputs data and ends the request. These are development tools and do not belong in production responses.
 
-For session data, use `Session::get()`, `Session::set()`, and `Session::unset()`. The `flundr\utility\Log` class provides `write()` and `error()`; after a `use` statement, these can be called as `Log::write()` and `Log::error()`. Other core components cover email (`message/Email.php`), file storage, and image processing (`file/Storage.php`, `file/Thumbnail.php`). Check their exact APIs in the installed Core version when needed.
+For session data, use `Session::get()`, `Session::set()`, and `Session::unset()`. The `flundr\utility\Log` class provides `write()` and `error()`; after a `use` statement, these can be called as `Log::write()` and `Log::error()`. Other core components cover email (`message/Email.php`), file storage, and image processing (`file/Storage.php`, `file/Thumbnail.php`). Check their exact APIs in the flundr vendor folder when needed.
 
 ## Configuration and Bootstrap
 
