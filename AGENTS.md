@@ -2,7 +2,7 @@
 
 This file describes general development practices for projects built with the Flundr framework. It is intended to help both people and AI build small, readable MVC applications. The [Flundr Bootstrap repository](https://github.com/tubsn/flundr) shows the basic project structure. For deeper details, consult the flundr framework code in the [Flundr repository](https://github.com/tubsn/flundrCore) or in `vendor/flundr/core`. For common tasks, the guidance in this file should be sufficient without having to inspect the framework repository.
 
-> **Guiding principle:** Human readability takes priority over token savings and performance optimizations. Write simple, well-structured code. Keep controllers small and move application logic and recurring operations into appropriate models. Check existing controllers, models, layouts, and CSS/JS files before creating new ones. Add extra layers only when they make the code easier to understand or maintain. The goal is to build small, maintainable applications with as little unnecessary complexity as possible. Security checks must remain in place.
+> **Guiding principle:** Human readability takes priority over token savings and performance optimizations. Write simple, well-structured code. Keep controllers small and move application logic and recurring operations into appropriate models. Check existing controllers, models, layouts, and CSS/JS files before creating new ones. Make the code easy to understand. The goal is to build small, maintainable applications with as little unnecessary complexity as possible. Security checks must remain in place.
 
 ## Contents
 
@@ -37,11 +37,10 @@ Flundr follows the Model–View–Controller (MVC) pattern: routes select a cont
 
 - Use tabs for indentation.
 - Put opening braces for classes and methods on the same line.
-- Short, readable `return` statements inside `if` blocks may be written on one line.
 - Simplify nested `if/else` blocks with early returns where possible.
 - Avoid ternary expressions or use them sparingly; a regular `if` statement is often easier to read.
 - Use type declarations selectively when they provide a concrete benefit. Readability takes priority.
-- Name variables in `camelCase`: descriptive, but not unnecessarily long. For abbreviations such as ID or URL, names like `$articleID` and `$articleURL` are fine.
+- Variables in `camelCase`. For abbreviations such as ID or URL, names like `$articleID` and `$articleURL` are fine.
 - Use underscores in function and method names, such as `get_article()` or `refresh_cache()`.
 
 ```php
@@ -73,15 +72,18 @@ Controller names should describe a functional area or task, such as `Reports`, `
 class Content extends Controller {
 
 	public function __construct() {
-		$this->models('Articles');
+		$this->models('Articles,Events');
 		$this->view('DefaultLayout');
 	}
 
 	public function show_article($articleID) {
 		$article = $this->Articles->find_published($articleID);
 		if (!$article) {throw new \Exception('Article not found', 404);}
-
 		$this->view->article = $article;
+
+		$this->view->events = $this->Events->list(10);
+
+		$this->view->title = 'Anfrage nicht möglich';
 		$this->view->render('content/article');
 	}
 }
@@ -89,7 +91,7 @@ class Content extends Controller {
 
 Flundr passes exceptions to its error handler. If an `Error` controller exists, it receives the exception and can set the HTTP status from its code and render a custom error page. Without an `Error` controller, Flundr displays its own error page; in the example above, the exception code also serves as the HTTP status `404`.
 
-`$this->models('Articles,Users')` registers models. When `$this->Articles->find_published($articleID)` is accessed for the first time, Flundr initializes the registered model. This is a convenience, not a requirement: `new Articles()` is also possible, especially when the constructor needs arguments. Controllers should not contain SQL queries or extensive application logic.
+`$this->models('Articles,Users')` registers models. When `$this->Articles->find_published($articleID)` is accessed for the first time, Flundr initializes the registered model. This is a convenience, not a requirement: `new Articles()` is also possible, especially when the constructor needs arguments. But using the $this->Model->method() Syntax is generally prefered. Controllers should not contain SQL queries or extensive application logic.
 
 ## Models and Database
 
@@ -118,15 +120,16 @@ Applications can use and adapt the existing `DefaultLayout`. A separate layout m
 `$this->view('DefaultLayout')` selects the view class. Prefer setting template variables individually as view properties. This makes it clear in the controller which data the page receives. Passing a data array as the second argument to `render()` is also possible, but is not the preferred style:
 
 ```php
+$this->view->category = $categoryData;
+$this->view->article = $this->Articles->list(3);
+
 $this->view->title = 'Articles';
-$this->view->category = 'Knowledge';
-$this->view->article = $article;
 $this->view->render('content/article');
 ```
 
 `render('content/article')` loads the main template at `app/templates/content/article.tpl`. Layout defaults from `templateVars` are also available; render data passed to `render()` can override them. `$page` contains metadata such as `$page['title']` and is reserved as a variable name. Include partial templates with `include tpl('content/navigation')`.
 
-**Template style:** Templates are normally formatted HTML/PHP source code and should not be condensed. Please try to format the template files so that the are comfortably human readable. Add spacing and start each structural element (`header`, `nav`, `section`, `div`, `form`, `article`, `footer`, etc.) on its own line; put closing tags on their own lines as well. Do not join sibling elements as `</div><div>`. Indent with tabs according to the HTML hierarchy, and leave a blank line between larger sections. Write `if` and `foreach` blocks, including their contents, across multiple lines. Wrap long attributes and text lines where it improves readability; aim for code lines of roughly 60 to 90 characters. Short inline markup within a sentence may stay on one line if the sentence remains readable. Do not remove spaces or line breaks to save space or tokens. Try not to nest to deep. The single-line style for short CSS rules applies **only to CSS**. The following example assumes that values have been prepared appropriately for HTML output:
+**Template style:** Templates are normally formatted HTML/PHP source code and should not be condensed. Please try to format the template files so that the are comfortably human readable. 
 
 ```php
 <main class="main-content">
@@ -149,40 +152,16 @@ $this->view->render('content/article');
 </main>
 ```
 
-Write PHP short echo tags without extra spaces: `<?=$variable?>`. Do not define a local `$escape` closure at the beginning of every template or add escaping calls indiscriminately to every output. Models and controllers validate data according to application requirements; controllers or views can prepare values for a particular output. User input and other untrusted text require handling appropriate to the output context. `gnum()` can format numbers using German notation. If a project needs a function such as `escape_html()`, add it where appropriate.
-
-Regular HTML views also provide `$this->view->json($data)`, which sets the JSON header and encodes the data. `$this->view->referer($url)` stores a return URL; `$this->view->referer()` retrieves it. `$this->view->back($fallback)` redirects to that URL or to the fallback. Use `$this->view->redirect($url)` for a direct destination.
+Write PHP short echo tags without extra spaces: `<?=$variable?>`. Do not define a local `$escape` closure at the beginning of every template or add escaping calls indiscriminately to every output. Models and controllers validate data according to application requirements; controllers or views can prepare values for a particular output. `gnum()` can format numbers using German notation. Regular HTML views also provide `$this->view->json($data)`, which sets the JSON header and encodes the data. `$this->view->referer($url)` stores a return URL; `$this->view->referer()` retrieves it. `$this->view->back($fallback)` redirects to that URL or to the fallback. Use `$this->view->redirect($url)` for a direct destination.
 
 ## CSS and JavaScript
 
 CSS and JavaScript files can be included directly without a build step. This keeps them easy to read, edit, and work with using AI tools. No bundler is prescribed, but one can be added when needed. Check existing assets before creating new files: `main.css` and `main.js` are sufficient for simple applications. More complex applications may benefit from separate CSS files for individual views or layouts.
 **defaults.css:** Important: The Defaultview is loading a defaults.css file. If you don´t need this you should disable it in the view instead of overwriting styles. Be aware the the defaults.css file can mess up your styles if you don´t consider it!
 
-**CSS structure:** Organize stylesheets by page area and component. Mark larger sections with short comments that act as a table of contents. Group related selectors into small sections separated by blank lines. After a closing `}`, start the next rule no earlier than the next line; never join rules as `}.next-selector`. Multiple declarations per line are welcome if the result remains balanced and easy to scan. Put spaces after colons and semicolons. Wrap longer rules by groups of related properties; aim for lines of roughly 80 to 110 characters. Indent media queries as well. Standard CSS formatting is also fine—readability is what matters:
+Organize stylesheets by page area and component. Fonts can be configured through `$fonts` in a view or layout. For a font used throughout a layout, this is usually clearer than an `@import` in the CSS file.
 
-```css
-/* Hero */
-.hero {min-height: 490px; margin: 28px 3% 0; padding: 65px 7%; display: grid; grid-template-columns: 1fr 1fr;
-position: relative; overflow: hidden; border-radius: 30px; background: var(--accent); color: #fff;}
-.hero-copy {position: relative; z-index: 2; max-width: 570px;}
-.hero h1 {margin: 25px 0 20px; font-size: clamp(3rem, 5vw, 5rem); line-height: 1.05;}
-.hero p {max-width: 435px; line-height: 1.6;}
-
-/* Navigation */
-.side-nav {display: grid; gap: .5rem;}
-.side-nav a {display: block; padding: .5rem .75rem; text-decoration: none;}
-.side-nav a:hover {background: #eee;}
-
-/* Responsive */
-@media (max-width: 900px) {
-	.hero {grid-template-columns: 1fr;}
-	.hero-art {display: none;}
-}
-```
-
-Fonts can be configured through `$fonts` in a view or layout. For a font used throughout a layout, this is usually clearer than an `@import` in the CSS file.
-
-**JavaScript structure:** For interactive interfaces with their own state and multiple actions, prefer a class. This keeps state, DOM access, events, and rendering methods together in a clear unit. A small script can remain simple; avoid long IIFEs with many mutable variables and functions. Vue is also a good option for a frontend framework: it can be included without a bundler and integrated as a Vue app in a template.
+**JavaScript structure:** For interactive interfaces with their own state and multiple actions, prefer a class or create a vue app. This keeps state, DOM access, events, and rendering methods together in a clear unit. A small script can remain simple; avoid long IIFEs with many mutable variables and functions. Vue is a good option for a frontend framework: it can be included without a bundler and integrated as a Vue app in a template.
 
 Additional JavaScript or Vue components can be imported as ES modules when needed, for example: `import Dropdown from './components/dropdown-menu.js';`.
 
@@ -212,6 +191,7 @@ Further information about the auth process can be looked up in the auth classes 
 ```php
 $cacheKey = ['articles', 'overview'];
 $articles = Cache::get($cacheKey);
+
 if ($articles === null) {
 	$articles = $this->load_overview();
 	Cache::set($cacheKey, $articles, 3600);
